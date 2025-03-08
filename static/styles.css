@@ -1,3 +1,56 @@
-h1 {
-    text-align: center;
+body {
+    background-color: black;
+}
+
+button {
+    --glow-color: rgb(217, 176, 255);
+    --glow-spread-color: rgb(217, 176, 255);
+    --enhanced-glow-color: rgb(231, 206, 255);
+    --btn-color: rgb(100, 61, 136);
+    width: 200px; height: 80px;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--glow-color);
+    font-size: 15px;
+    font-weight: bold;
+    border: 0.25em solid var(--glow-color);
+    padding: 1em 3em;
+    background-color: var(--btn-color);
+    border-radius: 1em;
+    box-shadow: 0 0 2em 0.25em var(--glow-color), /* first outer shadow */
+    0 0 4em 1em var(--glow-spread-color), /* second outer shadow */
+    inset 0 0 0.75em 0.25em var(--glow-color);  /* internal shadow */
+    outline: none;
+    position: absolute;
+    transition: all 0.5s;
+}
+
+button::after {
+    pointer-events: none;
+    content: "";
+    position: absolute;
+    top: 120%;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: var(--glow-spread-color);
+    filter: blur(2em);
+    opacity: 0.7;
+    transform: perspective(1.5em) rotateX(35deg) scale(1, 0.6);
+}
+
+button:hover {
+    color: var(--btn-color);
+    background-color: var(--glow-spread-color);
+    box-shadow: 0 0 1em 0.25em var(--glow-color), /* first outer shadow */
+    0 0 4em 2em var(--glow-spread-color), /* second outer shadow */
+    inset 0 0 0.75em 0.25em var(--glow-color); /* internal shadow */
+}
+
+button:active {
+    transition: all 0.1s ease-in;
+    transform: translate(-50%, -50%) scale(0.9);
+    box-shadow: 0 0 0.6em 0.25em var(--glow-color), /* first outer shadow */
+    0 0 2.5em 2em var(--glow-spread-color), /* second outer shadow */
+    inset 0 0 0.5em 0.25em var(--glow-color); /* internal shadow */
 }
