@@ -3,12 +3,18 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="static/styles.css">
-    <title>Clicker</title>
+    <link rel="stylesheet" href="static/index.css">
+    <title>Home Page</title>
 </head>
 
 <body>
-    <button>Click here</button>
+    <form action="/submit" method="POST">
+        <label for="name">Your Name:</label>
+        <input type="text" id="name" name="name" required>
+        <button type="submit">Submit</button>
+    </form>
+    <a href="/greeting">Get greeted!</a> <p>(Enter your name first)</p><br>
+    <a href="/button">Cool css button</a>
 </body>
 
 </html>
