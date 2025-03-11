@@ -2,8 +2,15 @@ from flask import Flask, render_template, request
 import sqlite3
 
 app = Flask(__name__)
-connection = sqlite3.connect("database.db")
-cursor = connection.cursor()
+
+def find_last_name():
+    connection = sqlite3.connect("database.db")
+    cursor = connection.cursor()
+    cursor.execute("SELECT name FROM users ORDER BY id DESC LIMIT 1")
+    name = cursor.fetchall()[0][0]
+    connection.commit()
+    connection.close()
+    return name
 
 @app.route('/')
 def home():
@@ -15,18 +22,18 @@ def button():
 
 @app.route('/greeting')
 def greeting():
-    return render_template("greeting.html")
+    current_name = find_last_name()
+    return render_template("greeting.html", name=current_name)
 
-@app.route("/", methods=["GET", "POST"])
+@app.route("/", methods=["POST"])
 def form():
-    if request.method == "POST":
-        name = request.form["name"]
-        conn = sqlite3.connect("database.db")
-        cursor = conn.cursor()
-        cursor.execute("INSERT INTO users (name) VALUES (?)", (name,))
-        conn.commit()
-        conn.close()
-        return "Data saved successfully!"
+    name = request.form["name"]
+    connection = sqlite3.connect("database.db")
+    cursor = connection.cursor()
+    cursor.execute("INSERT INTO users (name) VALUES (?)", (name,))
+    connection.commit()
+    connection.close()
+    return render_template("index.html")
 
 if __name__ == '__main__':
     app.run(debug=True)
